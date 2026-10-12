@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CK Dynamics | Autonomous Drone Solutions for the Future</title>
+  <meta name="description" content="Pioneering the next generation of flight with AI-driven navigation, real-time telemetry analysis, and autonomous decision-making." />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-primary: #04060d;
+      --bg-secondary: #090d1a;
+      --bg-card: rgba(13, 19, 38, 0.65);
+      --bg-card-hover: rgba(18, 27, 54, 0.85);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #00e5ff;
+      --accent-indigo: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --border-subtle: rgba(148, 163, 184, 0.12);
+      --border-glow: rgba(0, 229, 255, 0.35);
+      --glow-blue: 0 0 35px rgba(0, 229, 255, 0.25);
+      --glow-purple: 0 0 45px rgba(139, 92, 246, 0.22);
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --container-max: 1200px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-color: var(--bg-primary);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Ambient Background Glows & Grid */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 25%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 85%, rgba(0, 229, 255, 0.07) 0%, transparent 50%);
+    }
+
+    .tech-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: 
+        linear-gradient(to right, rgba(148, 163, 184, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 40%, transparent 100%);
+    }
+
+    /* Interactive Particle Canvas */
+    #telemetry-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(4, 6, 13, 0.72);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(139, 92, 246, 0.25));
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+      position: relative;
+    }
+
+    .logo-mark svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--accent-blue);
+    }
+
+    .logo-text {
+      background: linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-contact:hover {
+      background: rgba(0, 229, 255, 0.1);
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    main {
+      flex: 1;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero {
+      padding: 6.5rem 0 5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: rgba(13, 19, 38, 0.8);
+      border: 1px solid rgba(0, 229, 255, 0.28);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-blue);
+      margin-bottom: 2rem;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.12);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--accent-blue);
+      box-shadow: 0 0 10px var(--accent-blue);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.45;
+        transform: scale(1.25);
+      }
+    }
+
+    .hero h1 {
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      background: linear-gradient(135deg, #ffffff 25%, #93c5fd 65%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p.subheadline {
+      max-width: 680px;
+      margin: 0 auto 2.75rem;
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      line-height: 1.65;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.95rem 2.1rem;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #030712;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, #60a5fa 50%, #a78bfa 100%);
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.35), 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 45px rgba(0, 229, 255, 0.55), 0 0 70px rgba(139, 92, 246, 0.35);
+    }
+
+    .btn-primary svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.25s ease;
+    }
+
+    .btn-primary:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* Telemetry HUD Bar */
+    .hud-strip {
+      max-width: 880px;
+      margin: 4.5rem auto 0;
+      padding: 1.25rem 1.75rem;
+      border-radius: 16px;
+      background: rgba(9, 13, 26, 0.75);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hud-strip::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-purple), transparent);
+      opacity: 0.6;
+    }
+
+    .hud-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-left: 1rem;
+      border-left: 2px solid rgba(0, 229, 255, 0.3);
+    }
+
+    .hud-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .hud-value {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .hud-value span {
+      color: var(--accent-blue);
+      font-size: 0.8rem;
+      font-weight: 400;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 4.5rem 0 7rem;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent-purple);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+
+    .feature-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 2.25rem 2rem;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.45), rgba(139, 92, 246, 0.35), transparent 65%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      background: var(--bg-card-hover);
+      box-shadow: var(--glow-blue), var(--glow-purple);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon-wrapper {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.12), rgba(139, 92, 246, 0.16));
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.6rem;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.12);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon-wrapper {
+      transform: scale(1.06);
+      border-color: var(--accent-blue);
+    }
+
+    .feature-icon-wrapper svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--accent-blue);
+    }
+
+    .feature-index {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+      margin-bottom: 0.85rem;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-meta {
+      padding-top: 1rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-blue);
+      letter-spacing: 0.04em;
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 2;
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(4, 6, 13, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 2.5rem 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .footer-email {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--accent-blue);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      background: rgba(0, 229, 255, 0.06);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      transition: all 0.25s ease;
+    }
+
+    .footer-email:hover {
+      background: rgba(0, 229, 255, 0.14);
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 18px rgba(0, 229, 255, 0.25);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hud-strip {
+        grid-template-columns: 1fr;
+        gap: 1.1rem;
+        max-width: 480px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .header-inner {
+        height: 70px;
+      }
+      .hero {
+        padding: 4.5rem 0 3.5rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .status-dot {
+        animation: none;
+      }
+      .feature-card,
+      .btn-primary,
+      .btn-contact {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Layers -->
+  <div class="ambient-bg" aria-hidden="true"></div>
+  <div class="tech-grid" aria-hidden="true"></div>
+  <canvas id="telemetry-canvas" aria-hidden="true"></canvas>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="CK Dynamics Home">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 19 21 12 17 5 21 12 2"></polygon>
+          </svg>
+        </span>
+        <span class="logo-text">CK Dynamics</span>
+      </a>
+      <a href="mailto:can@ckdynamics.space" class="btn-contact">
+        Contact
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge">
+          <span class="status-dot"></span>
+          <span>NEXT-GEN AEROSPACE &amp; AUTONOMOUS SYSTEMS</span>
+        </div>
+
+        <h1>Autonomous Drone Solutions for the Future.</h1>
+
+        <p class="subheadline">
+          Pioneering the next generation of flight with AI-driven navigation, real-time telemetry analysis, and autonomous decision-making.
+        </p>
+
+        <div class="hero-actions">
+          <a href="mailto:can@ckdynamics.space" class="btn-primary">
+            <span>Get in Touch</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Live Telemetry HUD Strip -->
+        <div class="hud-strip" aria-label="System Architecture Highlights">
+          <div class="hud-item">
+            <span class="hud-label">INFERENCE LATENCY</span>
+            <span class="hud-value">&lt; 2.4 ms <span>// ON-BOARD EDGE</span></span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">SPATIAL PERCEPTION</span>
+            <span class="hud-value">360° 4D <span>// VIO + LIDAR FUSION</span></span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">TELEMETRY STREAM</span>
+            <span class="hud-value">1,000 Hz <span>// REAL-TIME SYNC</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="capabilities">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">// CORE ARCHITECTURE</span>
+          <h2 class="section-title">Engineered for Mission-Critical Autonomy</h2>
+        </div>
+
+        <div class="features-grid">
+          <!-- Feature 1 -->
+          <article class="feature-card">
+            <div>
+              <div class="feature-icon-wrapper" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+              </div>
+              <div class="feature-index">SYS_MOD // 01</div>
+              <h3>AI-Powered Navigation</h3>
+              <p>
+                Advanced obstacle avoidance and pathfinding algorithms designed for dynamic, GPS-denied, and complex three-dimensional environments.
+              </p>
+            </div>
+            <div class="feature-meta">
+              <span>SLAM &amp; NEURAL PATHING</span>
+              <span>ACTIVE</span>
+            </div>
+          </article>
+
+          <!-- Feature 2 -->
+          <article class="feature-card">
+            <div>
+              <div class="feature-icon-wrapper" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+              </div>
+              <div class="feature-index">SYS_MOD // 02</div>
+              <h3>Real-Time Telemetry</h3>
+              <p>
+                High-frequency data processing for optimal flight stability, predictive diagnostics, and sub-millisecond state estimation across every axis.
+              </p>
+            </div>
+            <div class="feature-meta">
+              <span>HIGH-FREQ SENSOR FUSION</span>
+              <span>1.0 kHz</span>
+            </div>
+          </article>
+
+          <!-- Feature 3 -->
+          <article class="feature-card">
+            <div>
+              <div class="feature-icon-wrapper" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                  <rect x="9" y="9" width="6" height="6"></rect>
+                  <line x1="9" y1="1" x2="9" y2="4"></line>
+                  <line x1="15" y1="1" x2="15" y2="4"></line>
+                  <line x1="9" y1="20" x2="9" y2="23"></line>
+                  <line x1="15" y1="20" x2="15" y2="23"></line>
+                  <line x1="20" y1="9" x2="23" y2="9"></line>
+                  <line x1="20" y1="14" x2="23" y2="14"></line>
+                  <line x1="1" y1="9" x2="4" y2="9"></line>
+                  <line x1="1" y1="14" x2="4" y2="14"></line>
+                </svg>
+              </div>
+              <div class="feature-index">SYS_MOD // 03</div>
+              <h3>Edge Computing</h3>
+              <p>
+                On-board machine learning models for instant autonomous reactions without reliance on cloud connectivity or external ground control stations.
+              </p>
+            </div>
+            <div class="feature-meta">
+              <span>LOW-POWER NEURAL SOC</span>
+              <span>ZERO-LAG</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-copy">&copy; 2026 CK Dynamics. All rights reserved.</p>
+      <a href="mailto:can@ckdynamics.space" class="footer-email">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        <span>can@ckdynamics.space</span>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Lightweight Autonomous Telemetry Particle Network Script -->
+  <script>
+    (function () {
+      const canvas = document.getElementById('telemetry-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      const particles = [];
+      const getParticleCount = () => Math.min(Math.floor((width * height) / 18000), 65);
+      const maxDistance = 155;
+
+      const mouse = { x: null, y: null, radius: 140 };
+
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      window.addEventListener('mouseleave', () => {
+        mouse.x = null;
+        mouse.y = null;
+      });
+
+      class NodeParticle {
+        constructor() {
+          this.reset();
+        }
+
+        reset() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 0.45;
+          this.vy = (Math.random() - 0.5) * 0.45;
+          this.size = Math.random() * 1.8 + 0.8;
+          this.isAccent = Math.random() > 0.5;
+        }
+
+        update() {
+          if (prefersReducedMotion) return;
+
+          this.x += this.vx;
+          this.y += this.vy;
+
+          if (this.x < 0 || this.x > width) this.vx *= -1;
+          if (this.y < 0 || this.y > height) this.vy *= -1;
+
+          if (mouse.x !== null && mouse.y !== null) {
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < mouse.radius && dist > 0) {
+              const force = (mouse.radius - dist) / mouse.radius;
+              this.x -= (dx / dist) * force * 0.8;
+              this.y -= (dy / dist) * force * 0.8;
+            }
+          }
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.isAccent
+            ? 'rgba(0, 229, 255, 0.65)'
+            : 'rgba(139, 92, 246, 0.6)';
+          ctx.fill();
+        }
+      }
+
+      function initParticles() {
+        particles.length = 0;
+        const count = getParticleCount();
+        for (let i = 0; i < count; i++) {
+          particles.push(new NodeParticle());
+        }
+      }
+
+      function drawConnections() {
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.hypot(dx, dy);
+
+            if (dist < maxDistance) {
+              const alpha = (1 - dist / maxDistance) * 0.18;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(0, 229, 255, ${alpha})`;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+        }
+        drawConnections();
+        if (!prefersReducedMotion) {
+          requestAnimationFrame(animate);
+        }
+      }
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        initParticles();
+        if (prefersReducedMotion) {
+          animate();
+        }
+      });
+
+      initParticles();
+      animate();
+    })();
+  </script>
+</body>
+</html>
