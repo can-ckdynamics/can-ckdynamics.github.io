@@ -645,6 +645,116 @@
       color: var(--text-white);
     }
 
+    /* R&D Roadmap Strip */
+    .roadmap-panel {
+      margin-top: 2rem;
+      border: 1px solid var(--border-solid);
+      background: var(--bg-panel);
+    }
+
+    .roadmap-bar {
+      padding: 0.85rem 1.5rem;
+      background: var(--bg-terminal);
+      border-bottom: 1px solid var(--border-solid);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .roadmap-bar-title {
+      color: var(--text-white);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .roadmap-bar-sub {
+      color: var(--text-dim);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+    }
+
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .roadmap-step {
+      padding: 1.5rem 1.75rem;
+      border-right: 1px solid var(--border-solid);
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      position: relative;
+    }
+
+    .roadmap-step:last-child {
+      border-right: none;
+    }
+
+    .roadmap-step.active-step {
+      background: var(--bg-panel-alt);
+    }
+
+    .roadmap-step-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+    }
+
+    .roadmap-phase {
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .roadmap-step.active-step .roadmap-phase {
+      color: var(--accent-amber);
+    }
+
+    .roadmap-badge {
+      padding: 0.12rem 0.45rem;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-terminal);
+      color: var(--text-secondary);
+      font-size: 0.64rem;
+    }
+
+    .roadmap-badge.validated {
+      border-color: var(--text-secondary);
+      color: var(--text-white);
+    }
+
+    .roadmap-badge.active {
+      border-color: var(--accent-amber);
+      background: var(--accent-amber-dim);
+      color: var(--accent-amber);
+      font-weight: 700;
+    }
+
+    .roadmap-step h4 {
+      font-family: var(--font-sans);
+      font-size: 1.02rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-white);
+      letter-spacing: 0.01em;
+    }
+
+    .roadmap-step p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
     /* Call to Action & Team Section */
     .cta-section {
       padding: 4.5rem 0;
@@ -867,6 +977,16 @@
       .focus-grid {
         grid-template-columns: 1fr;
       }
+      .roadmap-grid {
+        grid-template-columns: 1fr;
+      }
+      .roadmap-step {
+        border-right: none;
+        border-bottom: 1px solid var(--border-solid);
+      }
+      .roadmap-step:last-child {
+        border-bottom: none;
+      }
       .cta-box {
         grid-template-columns: 1fr;
       }
@@ -931,6 +1051,10 @@
           <span class="key">CORE STACK:</span>
           <span class="val">HIGH-THROUGHPUT SBC // CUSTOM PCB // COMPOSITE 3D</span>
         </div>
+        <div class="status-kv">
+          <span class="key">LOC:</span>
+          <span class="val">ISTANBUL / TURKIYE</span>
+        </div>
       </div>
     </div>
   </div>
@@ -965,7 +1089,8 @@
 
       <nav class="header-nav" aria-label="Primary Navigation">
         <a href="#focus-areas" class="nav-link">01 // R&amp;D Focus</a>
-        <a href="#supporting-rd" class="nav-link">02 // Grants &amp; Team</a>
+        <a href="#rd-roadmap" class="nav-link">02 // Roadmap</a>
+        <a href="#supporting-rd" class="nav-link">03 // Grants &amp; Team</a>
         <a href="mailto:info@ckdynamics.space" class="btn btn-outline btn-sm">info@ckdynamics.space</a>
       </nav>
     </div>
@@ -1005,6 +1130,13 @@
                   <polyline points="7 7 17 7 17 17"></polyline>
                 </svg>
               </a>
+              <a href="#focus-areas" class="btn btn-outline">
+                <span>EXPLORE R&amp;D FOCUS</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+              </a>
             </div>
           </div>
 
@@ -1024,7 +1156,7 @@
                 <line x1="50" y1="20" x2="350" y2="20" stroke="#68707d" stroke-width="1" />
                 <line x1="50" y1="15" x2="50" y2="25" stroke="#68707d" stroke-width="1" />
                 <line x1="350" y1="15" x2="350" y2="25" stroke="#68707d" stroke-width="1" />
-                <text x="200" y="15" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">PROTOTYPE FRAME // CARBON-FIBER COMPOSITE</text>
+                <text x="200" y="15" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">PROTOTYPE 04 FRAME // CARBON-FIBER COMPOSITE</text>
 
                 <line x1="200" y1="30" x2="200" y2="240" stroke="#33363d" stroke-width="1" stroke-dasharray="4 4" />
                 <line x1="30" y1="135" x2="370" y2="135" stroke="#33363d" stroke-width="1" stroke-dasharray="4 4" />
@@ -1090,7 +1222,7 @@
 
               <div class="viewport-overlay-coords">
                 <span>SCHEMATIC // CONCEPT VIEW</span>
-                <span>REV: PROTOTYPE_01</span>
+                <span>REV: PROTOTYPE_04</span>
               </div>
             </div>
 
@@ -1101,7 +1233,7 @@
                 <span>PROJECT STATUS: EARLY PROTOTYPING &amp; R&amp;D</span>
               </div>
               <p class="project-status-desc">
-                Currently building and testing hardware bench prototypes, evaluating edge inference models on compact single-board computers and custom PCBs, and iterating 3D-printed composite airframe structures.
+                Manual takeoff and stable flight validated with our 3D-printed Prototype 04 airframe. Currently transitioning to the autonomous module phase with compact SBCs, custom PCBs, and on-board edge AI inference.
               </p>
             </div>
           </div>
@@ -1243,11 +1375,60 @@
                 <span class="v">In-House Industrial 3D Printing</span>
               </div>
               <div class="spec-row">
-                <span class="k">STAGE</span>
-                <span class="v">Structural Prototyping</span>
+                <span class="k">MILESTONE</span>
+                <span class="v">Prototype 04 Flight-Tested</span>
               </div>
             </div>
           </article>
+        </div>
+
+        <!-- 3-Stage R&D Roadmap Strip -->
+        <div class="roadmap-panel" id="rd-roadmap">
+          <div class="roadmap-bar">
+            <span class="roadmap-bar-title">
+              <span class="indicator-square"></span>
+              <span>ENGINEERING &amp; PROTOTYPING ROADMAP</span>
+            </span>
+            <span class="roadmap-bar-sub">CURRENT BASELINE: PROTOTYPE_04 // AUTONOMY TRANSITION</span>
+          </div>
+
+          <div class="roadmap-grid">
+            <!-- Phase 01 -->
+            <div class="roadmap-step">
+              <div class="roadmap-step-meta">
+                <span class="roadmap-phase">PHASE 01 // COMPLETED</span>
+                <span class="roadmap-badge validated">[FLIGHT VALIDATED]</span>
+              </div>
+              <h4>PROTOTYPE 04 &amp; STABLE FLIGHT</h4>
+              <p>
+                Engineered and 3D-printed the 4th-generation composite UAV airframe; successfully achieved manual takeoff, propulsion calibration, and stable flight dynamics.
+              </p>
+            </div>
+
+            <!-- Phase 02 -->
+            <div class="roadmap-step active-step">
+              <div class="roadmap-step-meta">
+                <span class="roadmap-phase">PHASE 02 // CURRENT STAGE</span>
+                <span class="roadmap-badge active">[ACTIVE R&amp;D]</span>
+              </div>
+              <h4>AUTONOMOUS MODULE INTEGRATION</h4>
+              <p>
+                Transitioning from manual flight to on-board autonomy by integrating compact high-throughput SBCs, custom carrier PCBs, and edge AI inference models.
+              </p>
+            </div>
+
+            <!-- Phase 03 -->
+            <div class="roadmap-step">
+              <div class="roadmap-step-meta">
+                <span class="roadmap-phase">PHASE 03 // NEXT TARGET</span>
+                <span class="roadmap-badge">[UPCOMING]</span>
+              </div>
+              <h4>GPS-DENIED BVLOS &amp; AUTO-DOCKING</h4>
+              <p>
+                Field-testing autonomous route-planning algorithms for comms-lost scenarios alongside precision landing and self-charging pad trials.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1320,7 +1501,7 @@
   <!-- Footer -->
   <footer>
     <div class="container footer-inner">
-      <div>&copy; 2026 CK DYNAMICS. ALL RIGHTS RESERVED. // AUTONOMOUS UAV R&amp;D PROJECT</div>
+      <div>&copy; 2026 CK DYNAMICS. ALL RIGHTS RESERVED. // ISTANBUL / TURKIYE</div>
       <div class="footer-links">
         <span>DEV REPOSITORY: <a href="https://github.com/can-ckdynamics" target="_blank" rel="noopener noreferrer">github.com/can-ckdynamics</a></span>
         <span>INQUIRIES: <a href="mailto:info@ckdynamics.space">info@ckdynamics.space</a></span>
