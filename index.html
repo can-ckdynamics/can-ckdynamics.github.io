@@ -645,61 +645,136 @@
       color: var(--text-white);
     }
 
-    /* R&D Roadmap Strip */
-    .roadmap-panel {
-      margin-top: 2rem;
-      border: 1px solid var(--border-solid);
-      background: var(--bg-panel);
-    }
-
-    .roadmap-bar {
-      padding: 0.85rem 1.5rem;
-      background: var(--bg-terminal);
-      border-bottom: 1px solid var(--border-solid);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 0.74rem;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .roadmap-bar-title {
-      color: var(--text-white);
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-    }
-
-    .roadmap-bar-sub {
-      color: var(--text-dim);
-      font-size: 0.68rem;
-      letter-spacing: 0.06em;
-    }
-
-    .roadmap-grid {
+    /* Visual Engineering Timeline / Roadmap */
+    .roadmap-timeline {
+      position: relative;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      padding-top: 0.5rem;
     }
 
-    .roadmap-step {
-      padding: 1.5rem 1.75rem;
-      border-right: 1px solid var(--border-solid);
+    /* Horizontal connecting track behind nodes */
+    .roadmap-timeline::before {
+      content: "";
+      position: absolute;
+      top: 23px;
+      left: calc(16.66% + 14px);
+      width: calc(33.33% - 14px);
+      height: 2px;
+      background: var(--accent-amber);
+      z-index: 1;
+    }
+
+    .roadmap-timeline::after {
+      content: "";
+      position: absolute;
+      top: 23px;
+      left: 50%;
+      width: calc(33.33% - 14px);
+      height: 2px;
+      background: repeating-linear-gradient(
+        to right,
+        var(--border-strong) 0,
+        var(--border-strong) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+      z-index: 1;
+    }
+
+    .roadmap-item {
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      align-items: stretch;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Timeline Node Header above each card */
+    .roadmap-node-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 1.35rem;
+    }
+
+    .roadmap-node {
+      width: 36px;
+      height: 36px;
+      background: var(--bg-terminal);
+      border: 2px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-dim);
       position: relative;
     }
 
-    .roadmap-step:last-child {
-      border-right: none;
+    /* Vertical stem connecting node to card */
+    .roadmap-node::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 1.35rem;
+      background: var(--border-solid);
     }
 
-    .roadmap-step.active-step {
+    .roadmap-item.completed .roadmap-node {
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+      background: var(--bg-panel);
+    }
+
+    .roadmap-item.completed .roadmap-node::after {
+      background: rgba(255, 107, 0, 0.5);
+    }
+
+    .roadmap-item.active .roadmap-node {
+      border-color: var(--accent-amber);
+      background: var(--accent-amber);
+      color: #090a0c;
+      box-shadow: 0 0 0 5px rgba(255, 107, 0, 0.16);
+    }
+
+    .roadmap-item.active .roadmap-node::after {
+      background: var(--accent-amber);
+      width: 2px;
+    }
+
+    /* Milestone Card */
+    .roadmap-card {
+      flex: 1;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-solid);
+      padding: 1.6rem 1.6rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .roadmap-item.completed .roadmap-card {
+      border-top: 2px solid rgba(255, 107, 0, 0.55);
+    }
+
+    .roadmap-item.active .roadmap-card {
       background: var(--bg-panel-alt);
+      border-color: var(--accent-amber);
+      border-top: 3px solid var(--accent-amber);
+    }
+
+    .roadmap-item.upcoming .roadmap-card {
+      border-style: dashed;
+      background: rgba(18, 20, 24, 0.65);
     }
 
     .roadmap-step-meta {
@@ -709,6 +784,9 @@
       font-family: var(--font-mono);
       font-size: 0.7rem;
       letter-spacing: 0.06em;
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-muted);
     }
 
     .roadmap-phase {
@@ -716,12 +794,16 @@
       font-weight: 600;
     }
 
-    .roadmap-step.active-step .roadmap-phase {
+    .roadmap-item.completed .roadmap-phase {
+      color: var(--text-secondary);
+    }
+
+    .roadmap-item.active .roadmap-phase {
       color: var(--accent-amber);
     }
 
     .roadmap-badge {
-      padding: 0.12rem 0.45rem;
+      padding: 0.14rem 0.5rem;
       border: 1px solid var(--border-strong);
       background: var(--bg-terminal);
       color: var(--text-secondary);
@@ -729,7 +811,7 @@
     }
 
     .roadmap-badge.validated {
-      border-color: var(--text-secondary);
+      border-color: rgba(255, 107, 0, 0.5);
       color: var(--text-white);
     }
 
@@ -740,19 +822,49 @@
       font-weight: 700;
     }
 
-    .roadmap-step h4 {
+    .roadmap-card h3 {
       font-family: var(--font-sans);
-      font-size: 1.02rem;
+      font-size: 1.12rem;
       font-weight: 700;
       text-transform: uppercase;
       color: var(--text-white);
       letter-spacing: 0.01em;
+      margin-bottom: 0.65rem;
+      line-height: 1.3;
     }
 
-    .roadmap-step p {
-      font-size: 0.88rem;
+    .roadmap-card p {
+      font-size: 0.9rem;
       color: var(--text-secondary);
       line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .roadmap-checklist {
+      list-style: none;
+      border-top: 1px solid var(--border-muted);
+      padding-top: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+
+    .roadmap-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--text-secondary);
+    }
+
+    .roadmap-checklist li .mark {
+      color: var(--accent-amber);
+      font-weight: 700;
+    }
+
+    .roadmap-item.upcoming .roadmap-checklist li .mark {
+      color: var(--text-dim);
     }
 
     /* Call to Action & Team Section */
@@ -977,15 +1089,20 @@
       .focus-grid {
         grid-template-columns: 1fr;
       }
-      .roadmap-grid {
+      .roadmap-timeline {
         grid-template-columns: 1fr;
+        gap: 1.75rem;
       }
-      .roadmap-step {
-        border-right: none;
-        border-bottom: 1px solid var(--border-solid);
+      .roadmap-timeline::before,
+      .roadmap-timeline::after {
+        display: none;
       }
-      .roadmap-step:last-child {
-        border-bottom: none;
+      .roadmap-node-row {
+        justify-content: flex-start;
+        margin-bottom: 0.75rem;
+      }
+      .roadmap-node::after {
+        height: 0.75rem;
       }
       .cta-box {
         grid-template-columns: 1fr;
@@ -1381,59 +1498,101 @@
             </div>
           </article>
         </div>
+      </div>
+    </section>
 
-        <!-- 3-Stage R&D Roadmap Strip -->
-        <div class="roadmap-panel" id="rd-roadmap">
-          <div class="roadmap-bar">
-            <span class="roadmap-bar-title">
-              <span class="indicator-square"></span>
-              <span>ENGINEERING &amp; PROTOTYPING ROADMAP</span>
-            </span>
-            <span class="roadmap-bar-sub">CURRENT BASELINE: PROTOTYPE_04 // AUTONOMY TRANSITION</span>
+    <!-- 3. Dedicated Visual Engineering & Prototyping Roadmap Section -->
+    <section class="section-block" id="rd-roadmap">
+      <div class="container">
+        <div class="section-bar">
+          <div>
+            <span class="section-eyebrow">// DEVELOPMENT TIMELINE &amp; MILESTONES</span>
+            <h2 class="section-heading">ENGINEERING &amp; PROTOTYPING ROADMAP</h2>
+          </div>
+          <div class="section-code">BASELINE: PROTOTYPE_04 // AUTONOMY TRANSITION</div>
+        </div>
+
+        <div class="roadmap-timeline">
+          <!-- Phase 01: Completed -->
+          <div class="roadmap-item completed">
+            <div class="roadmap-node-row">
+              <div class="roadmap-node" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="roadmap-card">
+              <div>
+                <div class="roadmap-step-meta">
+                  <span class="roadmap-phase">PHASE 01 // COMPLETED</span>
+                  <span class="roadmap-badge validated">[FLIGHT VALIDATED]</span>
+                </div>
+                <h3>PROTOTYPE 04 &amp; STABLE FLIGHT</h3>
+                <p>
+                  Engineered and 3D-printed the 4th-generation composite UAV airframe; successfully achieved manual takeoff, propulsion calibration, and stable flight dynamics.
+                </p>
+              </div>
+              <ul class="roadmap-checklist">
+                <li><span class="mark">[✓]</span><span>Composite Airframe Iteration (Rev 01–04)</span></li>
+                <li><span class="mark">[✓]</span><span>Propulsion &amp; ESC Bench Calibration</span></li>
+                <li><span class="mark">[✓]</span><span>Manual Takeoff &amp; Hover Stability Test</span></li>
+              </ul>
+            </div>
           </div>
 
-          <div class="roadmap-grid">
-            <!-- Phase 01 -->
-            <div class="roadmap-step">
-              <div class="roadmap-step-meta">
-                <span class="roadmap-phase">PHASE 01 // COMPLETED</span>
-                <span class="roadmap-badge validated">[FLIGHT VALIDATED]</span>
-              </div>
-              <h4>PROTOTYPE 04 &amp; STABLE FLIGHT</h4>
-              <p>
-                Engineered and 3D-printed the 4th-generation composite UAV airframe; successfully achieved manual takeoff, propulsion calibration, and stable flight dynamics.
-              </p>
+          <!-- Phase 02: Active / Current -->
+          <div class="roadmap-item active">
+            <div class="roadmap-node-row">
+              <div class="roadmap-node" aria-hidden="true">02</div>
             </div>
-
-            <!-- Phase 02 -->
-            <div class="roadmap-step active-step">
-              <div class="roadmap-step-meta">
-                <span class="roadmap-phase">PHASE 02 // CURRENT STAGE</span>
-                <span class="roadmap-badge active">[ACTIVE R&amp;D]</span>
+            <div class="roadmap-card">
+              <div>
+                <div class="roadmap-step-meta">
+                  <span class="roadmap-phase">PHASE 02 // CURRENT STAGE</span>
+                  <span class="roadmap-badge active">[ACTIVE R&amp;D]</span>
+                </div>
+                <h3>AUTONOMOUS MODULE INTEGRATION</h3>
+                <p>
+                  Transitioning from manual flight to on-board autonomy by integrating compact high-throughput SBCs, custom carrier PCBs, and edge AI inference models.
+                </p>
               </div>
-              <h4>AUTONOMOUS MODULE INTEGRATION</h4>
-              <p>
-                Transitioning from manual flight to on-board autonomy by integrating compact high-throughput SBCs, custom carrier PCBs, and edge AI inference models.
-              </p>
+              <ul class="roadmap-checklist">
+                <li><span class="mark">[→]</span><span>High-Throughput SBC &amp; Custom PCB Bus</span></li>
+                <li><span class="mark">[→]</span><span>On-Board Computer Vision &amp; Edge AI</span></li>
+                <li><span class="mark">[→]</span><span>Autonomous Attitude &amp; Waypoint Hold</span></li>
+              </ul>
             </div>
+          </div>
 
-            <!-- Phase 03 -->
-            <div class="roadmap-step">
-              <div class="roadmap-step-meta">
-                <span class="roadmap-phase">PHASE 03 // NEXT TARGET</span>
-                <span class="roadmap-badge">[UPCOMING]</span>
+          <!-- Phase 03: Upcoming Target -->
+          <div class="roadmap-item upcoming">
+            <div class="roadmap-node-row">
+              <div class="roadmap-node" aria-hidden="true">03</div>
+            </div>
+            <div class="roadmap-card">
+              <div>
+                <div class="roadmap-step-meta">
+                  <span class="roadmap-phase">PHASE 03 // NEXT TARGET</span>
+                  <span class="roadmap-badge">[UPCOMING]</span>
+                </div>
+                <h3>GPS-DENIED BVLOS &amp; AUTO-DOCKING</h3>
+                <p>
+                  Field-testing autonomous route-planning algorithms for comms-lost scenarios alongside precision landing and self-charging pad trials.
+                </p>
               </div>
-              <h4>GPS-DENIED BVLOS &amp; AUTO-DOCKING</h4>
-              <p>
-                Field-testing autonomous route-planning algorithms for comms-lost scenarios alongside precision landing and self-charging pad trials.
-              </p>
+              <ul class="roadmap-checklist">
+                <li><span class="mark">[○]</span><span>GPS-Denied / Lost-Link Route Planning</span></li>
+                <li><span class="mark">[○]</span><span>Long-Range BVLOS Field Validation</span></li>
+                <li><span class="mark">[○]</span><span>Autonomous Landing &amp; Self-Charging Pad</span></li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 3. Incubator & Startup Grants + Contact & Team Section -->
+    <!-- 4. Incubator & Startup Grants + Contact & Team Section -->
     <section class="cta-section" id="supporting-rd">
       <div class="container">
         <div class="cta-box">
