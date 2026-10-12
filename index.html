@@ -1,10 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CK DYNAMICS // Autonomous Aerospace Hardware & Flight Systems</title>
-  <meta name="description" content="CK Dynamics specializes in manufacturing and engineering semi and fully autonomous drone flight systems, integrating custom AI directly into robust aerospace hardware." />
+  <title>CK DYNAMICS // Autonomous UAV R&D Project</title>
+  <meta name="description" content="An early-stage aerospace hardware initiative focused on Raspberry Pi edge-computing, additive manufacturing, and AI-driven autonomous navigation for GPS-denied environments." />
 
   <!-- Google Fonts: Industrial Grotesque + Technical Monospace -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,8 +27,6 @@
       --accent-amber: #ff6b00;
       --accent-amber-bright: #ff8533;
       --accent-amber-dim: rgba(255, 107, 0, 0.12);
-      --status-red: #ef4444;
-      --status-green: #10b981;
       --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
       --font-tech: 'Share Tech Mono', monospace;
@@ -54,6 +53,12 @@
       position: relative;
       overflow-x: hidden;
       line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
     }
 
     /* Engineering Grid Paper Overlay */
@@ -99,8 +104,8 @@
       z-index: 2;
     }
 
-    /* Top System Telemetry Bar */
-    .telemetry-ribbon {
+    /* Top R&D Project Info Ribbon */
+    .status-ribbon {
       background: var(--bg-terminal);
       border-bottom: 1px solid var(--border-solid);
       font-family: var(--font-mono);
@@ -110,7 +115,7 @@
       z-index: 30;
     }
 
-    .telemetry-ribbon-inner {
+    .status-ribbon-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -121,41 +126,34 @@
       flex-wrap: wrap;
     }
 
-    .telemetry-group {
+    .status-group {
       display: flex;
       align-items: center;
       gap: 1.25rem;
       flex-wrap: wrap;
     }
 
-    .telemetry-kv {
+    .status-kv {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
       letter-spacing: 0.04em;
     }
 
-    .telemetry-kv .key {
+    .status-kv .key {
       color: var(--text-dim);
     }
 
-    .telemetry-kv .val {
+    .status-kv .val {
       color: var(--text-white);
       font-weight: 600;
     }
 
-    .telemetry-kv .val-offline {
+    .status-kv .val-badge {
       color: var(--accent-amber);
       background: var(--accent-amber-dim);
       border: 1px solid rgba(255, 107, 0, 0.4);
-      padding: 0.05rem 0.4rem;
-    }
-
-    .telemetry-kv .val-active {
-      color: var(--text-white);
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-strong);
-      padding: 0.05rem 0.4rem;
+      padding: 0.05rem 0.45rem;
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
@@ -166,16 +164,6 @@
       height: 6px;
       background-color: var(--accent-amber);
       display: inline-block;
-    }
-
-    .blink {
-      animation: hard-blink 1.4s steps(2, start) infinite;
-    }
-
-    @keyframes hard-blink {
-      to {
-        visibility: hidden;
-      }
     }
 
     /* Header */
@@ -278,7 +266,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
-      padding: 0.85rem 1.4rem;
+      padding: 0.9rem 1.5rem;
       border: 1px solid var(--border-solid);
       cursor: pointer;
       transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
@@ -360,6 +348,8 @@
       font-size: 0.72rem;
       color: var(--text-dim);
       letter-spacing: 0.08em;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
     .doc-meta span.tag {
@@ -369,9 +359,9 @@
 
     .hero h1 {
       font-family: var(--font-sans);
-      font-size: clamp(2rem, 3.6vw, 3.15rem);
+      font-size: clamp(1.95rem, 3.4vw, 2.95rem);
       font-weight: 700;
-      line-height: 1.08;
+      line-height: 1.1;
       letter-spacing: -0.02em;
       text-transform: uppercase;
       color: var(--text-white);
@@ -383,23 +373,7 @@
       color: var(--text-secondary);
       line-height: 1.65;
       max-width: 620px;
-      margin-bottom: 2rem;
-    }
-
-    .identity-statement {
-      background: var(--bg-terminal);
-      border: 1px solid var(--border-solid);
-      border-left: 3px solid var(--accent-amber);
-      padding: 0.9rem 1.15rem;
       margin-bottom: 2.25rem;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-      line-height: 1.55;
-    }
-
-    .identity-statement strong {
-      color: var(--text-white);
     }
 
     .hero-actions {
@@ -409,7 +383,7 @@
       flex-wrap: wrap;
     }
 
-    /* Right Hero Panel: CAD Schematic + Telemetry Terminal */
+    /* Right Hero Panel: CAD Schematic + Project Status Box */
     .hero-schematic-panel {
       display: flex;
       flex-direction: column;
@@ -454,7 +428,7 @@
       position: relative;
       padding: 1.25rem;
       flex: 1;
-      min-height: 290px;
+      min-height: 270px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -466,7 +440,7 @@
 
     .schematic-svg {
       width: 100%;
-      max-width: 420px;
+      max-width: 410px;
       height: auto;
     }
 
@@ -483,58 +457,32 @@
       pointer-events: none;
     }
 
-    /* Live System Status Console inside Hero */
-    .system-status-console {
-      padding: 1.25rem;
+    /* Simple Honest Project Status Box */
+    .project-status-box {
+      padding: 1.35rem 1.5rem;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
       background: var(--bg-terminal);
     }
 
-    .console-title {
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-muted);
-      padding-bottom: 0.45rem;
-    }
-
-    .status-matrix {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.6rem;
-    }
-
-    .status-cell {
-      border: 1px solid var(--border-muted);
-      background: var(--bg-panel);
-      padding: 0.55rem 0.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .status-cell .label {
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      letter-spacing: 0.06em;
-    }
-
-    .status-cell .value {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-white);
-      display: flex;
+    .project-status-badge {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 0.55rem;
+      padding: 0.45rem 0.8rem;
+      background: var(--accent-amber-dim);
+      border: 1px solid var(--accent-amber);
+      color: var(--accent-amber);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
     }
 
-    .status-cell .value.amber {
-      color: var(--accent-amber);
+    .project-status-desc {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
     }
 
     /* Section Header Bar */
@@ -604,7 +552,7 @@
     }
 
     .focus-card-top {
-      padding: 1.75rem 1.75rem 1.25rem;
+      padding: 1.75rem 1.75rem 1.5rem;
     }
 
     .focus-card-header {
@@ -697,81 +645,6 @@
       color: var(--text-white);
     }
 
-    /* Engineering Architecture & Terminal Diagnostics Block */
-    .architecture-panel {
-      margin-top: 2.5rem;
-      border: 1px solid var(--border-solid);
-      background: var(--bg-panel);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .arch-col {
-      padding: 2rem;
-    }
-
-    .arch-col:first-child {
-      border-right: 1px solid var(--border-solid);
-    }
-
-    .arch-title {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--accent-amber);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .terminal-code {
-      background: var(--bg-terminal);
-      border: 1px solid var(--border-solid);
-      padding: 1.15rem;
-      font-family: var(--font-mono);
-      font-size: 0.74rem;
-      line-height: 1.65;
-      color: var(--text-secondary);
-      overflow-x: auto;
-    }
-
-    .terminal-code .cmd { color: var(--text-white); font-weight: 600; }
-    .terminal-code .warn { color: var(--accent-amber); }
-    .terminal-code .comment { color: var(--text-dim); }
-
-    .bom-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-    }
-
-    .bom-table th,
-    .bom-table td {
-      border: 1px solid var(--border-solid);
-      padding: 0.6rem 0.75rem;
-      text-align: left;
-    }
-
-    .bom-table th {
-      background: var(--bg-terminal);
-      color: var(--text-dim);
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .bom-table td {
-      background: var(--bg-panel-alt);
-      color: var(--text-secondary);
-    }
-
-    .bom-table td.highlight {
-      color: var(--text-white);
-      font-weight: 600;
-    }
-
     /* Call to Action Section */
     .cta-section {
       padding: 4.5rem 0;
@@ -799,8 +672,9 @@
 
     .cta-box p {
       color: var(--text-secondary);
-      font-size: 1rem;
-      max-width: 580px;
+      font-size: 1.02rem;
+      line-height: 1.65;
+      max-width: 600px;
     }
 
     .cta-contact-module {
@@ -896,13 +770,6 @@
       .focus-grid {
         grid-template-columns: 1fr;
       }
-      .architecture-panel {
-        grid-template-columns: 1fr;
-      }
-      .arch-col:first-child {
-        border-right: none;
-        border-bottom: 1px solid var(--border-solid);
-      }
       .cta-box {
         grid-template-columns: 1fr;
       }
@@ -918,9 +785,6 @@
       .cta-box {
         padding: 1.75rem 1.35rem;
       }
-      .status-matrix {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
@@ -932,20 +796,16 @@
   <!-- Faint Blueprint Airframe & PCB Schematic Watermark -->
   <div class="blueprint-watermark" aria-hidden="true">
     <svg viewBox="0 0 1400 900" fill="none" stroke="#ffffff" stroke-width="1">
-      <!-- Orthographic Coordinate Axes -->
       <line x1="700" y1="0" x2="700" y2="900" stroke-dasharray="6 6" />
       <line x1="0" y1="450" x2="1400" y2="450" stroke-dasharray="6 6" />
       <circle cx="700" cy="450" r="320" stroke-dasharray="4 8" />
       <circle cx="700" cy="450" r="180" />
-      <!-- Quadrotor Boom Geometry -->
       <line x1="420" y1="170" x2="980" y2="730" stroke-width="1.5" />
       <line x1="980" y1="170" x2="420" y2="730" stroke-width="1.5" />
-      <!-- Rotor Swept Disks -->
       <circle cx="420" cy="170" r="120" />
       <circle cx="980" cy="170" r="120" />
       <circle cx="420" cy="730" r="120" />
       <circle cx="980" cy="730" r="120" />
-      <!-- PCB Routing Lines Left/Right -->
       <polyline points="80,120 220,120 260,160 260,340 190,410" />
       <polyline points="100,150 200,150 230,180 230,320" />
       <rect x="620" y="340" width="160" height="220" />
@@ -953,35 +813,23 @@
     </svg>
   </div>
 
-  <!-- Top Telemetry / System Status Bar -->
-  <div class="telemetry-ribbon" role="region" aria-label="Live System Telemetry Readout">
-    <div class="container telemetry-ribbon-inner">
-      <div class="telemetry-group">
-        <div class="telemetry-kv">
-          <span class="key">SYS_ID:</span>
-          <span class="val">CKD-FLIGHT-OS // REV 4.2</span>
+  <!-- Top Project Overview Ribbon -->
+  <div class="status-ribbon" role="region" aria-label="Project Phase Summary">
+    <div class="container status-ribbon-inner">
+      <div class="status-group">
+        <div class="status-kv">
+          <span class="key">INITIATIVE:</span>
+          <span class="val">CK DYNAMICS // HARDWARE R&amp;D</span>
         </div>
-        <div class="telemetry-kv">
-          <span class="key">GPS STATUS:</span>
-          <span class="val-offline">OFFLINE</span>
-        </div>
-        <div class="telemetry-kv">
-          <span class="key">AUTONOMY:</span>
-          <span class="val-active"><span class="indicator-square blink"></span>ACTIVE</span>
-        </div>
-        <div class="telemetry-kv">
-          <span class="key">NAV MODE:</span>
-          <span class="val">BVLOS // VIO_DEAD_RECKONING</span>
+        <div class="status-kv">
+          <span class="key">PROJECT STATUS:</span>
+          <span class="val-badge"><span class="indicator-square"></span>EARLY PROTOTYPING &amp; R&amp;D</span>
         </div>
       </div>
-      <div class="telemetry-group">
-        <div class="telemetry-kv">
-          <span class="key">EDGE_NPU:</span>
-          <span class="val" id="npu-load">42.8 TOPS // NOMINAL</span>
-        </div>
-        <div class="telemetry-kv">
-          <span class="key">UTC:</span>
-          <span class="val" id="utc-clock">00:00:00Z</span>
+      <div class="status-group">
+        <div class="status-kv">
+          <span class="key">CORE STACK:</span>
+          <span class="val">RPi SBC // EDGE AI // ADDITIVE CAD</span>
         </div>
       </div>
     </div>
@@ -1003,13 +851,13 @@
         </div>
         <div class="brand-text-wrap">
           <span class="brand-name">CK Dynamics</span>
-          <span class="brand-sub">Autonomous Aerospace &amp; Flight Hardware</span>
+          <span class="brand-sub">Autonomous UAV R&amp;D Project</span>
         </div>
       </a>
 
       <nav class="header-nav" aria-label="Primary Navigation">
-        <a href="#hardware-focus" class="nav-link">01 // Focus Areas</a>
-        <a href="#system-specs" class="nav-link">02 // Architecture</a>
+        <a href="#focus-areas" class="nav-link">01 // R&amp;D Focus</a>
+        <a href="#supporting-rd" class="nav-link">02 // Grants &amp; Support</a>
         <a href="mailto:can@ckdynamics.space" class="btn btn-outline btn-sm">can@ckdynamics.space</a>
       </nav>
     </div>
@@ -1021,7 +869,7 @@
     <section class="hero">
       <div class="container">
         <div class="hero-grid">
-          <!-- Left Column: Core Engineering Copy -->
+          <!-- Left Column: Hero Copy -->
           <div class="hero-content">
             <span class="corner-mark corner-tl"></span>
             <span class="corner-mark corner-tr"></span>
@@ -1030,32 +878,21 @@
 
             <div>
               <div class="doc-meta">
-                <span>DOC_REF: CKD-UAV-SPEC-2026</span>
-                <span class="tag">[ DEFENSE &amp; INDUSTRIAL HARDWARE ]</span>
+                <span>DOC_REF: CKD-RD-OVERVIEW</span>
+                <span class="tag">[ EARLY-STAGE HARDWARE INITIATIVE ]</span>
               </div>
 
-              <h1>RUGGED SEMI-AUTONOMOUS &amp; FULLY AUTONOMOUS FLIGHT SYSTEMS</h1>
+              <h1>CK DYNAMICS // AUTONOMOUS UAV R&amp;D PROJECT</h1>
 
               <p class="hero-subheadline">
-                Developing next-generation unmanned aerial hardware powered by on-board AI edge compute, resilient long-range BVLOS navigation, and additive manufacturing.
+                An early-stage aerospace hardware initiative focused on Raspberry Pi edge-computing, additive manufacturing, and AI-driven autonomous navigation for GPS-denied environments.
               </p>
-
-              <div class="identity-statement">
-                <strong>CORE MANDATE // CK DYNAMICS:</strong> Manufacturing and engineering semi and fully autonomous drone flight systems, integrating custom AI directly into robust aerospace hardware built for contested and comms-denied operational theaters.
-              </div>
             </div>
 
             <div class="hero-actions">
-              <a href="#hardware-focus" class="btn btn-amber">
-                <span>EXPLORE HARDWARE</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                  <polyline points="19 12 12 19 5 12"></polyline>
-                </svg>
-              </a>
-              <a href="mailto:can@ckdynamics.space" class="btn btn-outline">
-                <span>GET IN TOUCH</span>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <a href="mailto:can@ckdynamics.space" class="btn btn-amber">
+                <span>CONTACT FOR INCUBATOR &amp; GRANT DETAILS</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                   <line x1="7" y1="17" x2="17" y2="7"></line>
                   <polyline points="7 7 17 7 17 17"></polyline>
                 </svg>
@@ -1063,36 +900,32 @@
             </div>
           </div>
 
-          <!-- Right Column: Interactive CAD Airframe / PCB Blueprint & System Status -->
+          <!-- Right Column: Blueprint Concept + Simple Project Status Box -->
           <div class="hero-schematic-panel">
             <div class="schematic-header">
-              <span id="schematic-title">FIG 1.1 // UAV AIRFRAME ORTHOGRAPHIC CAD</span>
+              <span id="schematic-title">CONCEPT_CAD // PROTOTYPE AIRFRAME GEOMETRY</span>
               <div class="schematic-tabs" role="tablist">
-                <button type="button" class="schematic-tab active" data-view="airframe">CAD_FRAME</button>
-                <button type="button" class="schematic-tab" data-view="pcb">CM4_CARRIER_PCB</button>
+                <button type="button" class="schematic-tab active" data-view="airframe">FRAME_CAD</button>
+                <button type="button" class="schematic-tab" data-view="pcb">SBC_LAYOUT</button>
               </div>
             </div>
 
             <div class="schematic-viewport">
               <!-- View 1: UAV Airframe Blueprint SVG -->
               <svg id="view-airframe" class="schematic-svg" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Dimension Callouts -->
                 <line x1="50" y1="20" x2="350" y2="20" stroke="#68707d" stroke-width="1" />
                 <line x1="50" y1="15" x2="50" y2="25" stroke="#68707d" stroke-width="1" />
                 <line x1="350" y1="15" x2="350" y2="25" stroke="#68707d" stroke-width="1" />
-                <text x="200" y="15" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">WHEELBASE: 480.0mm [PA12-CF TRUSS]</text>
+                <text x="200" y="15" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">PROTOTYPE FRAME // 3D-PRINTED CF-NYLON</text>
 
-                <!-- Center Datum Lines -->
                 <line x1="200" y1="30" x2="200" y2="240" stroke="#33363d" stroke-width="1" stroke-dasharray="4 4" />
                 <line x1="30" y1="135" x2="370" y2="135" stroke="#33363d" stroke-width="1" stroke-dasharray="4 4" />
 
-                <!-- Carbon Fiber Arms -->
                 <line x1="95" y1="65" x2="305" y2="205" stroke="#a0a8b4" stroke-width="6" />
                 <line x1="305" y1="65" x2="95" y2="205" stroke="#a0a8b4" stroke-width="6" />
                 <line x1="95" y1="65" x2="305" y2="205" stroke="#090a0c" stroke-width="2" />
                 <line x1="305" y1="65" x2="95" y2="205" stroke="#090a0c" stroke-width="2" />
 
-                <!-- 4 Rotor Assemblies -->
                 <g stroke="#f2f4f7" stroke-width="1.2">
                   <circle cx="95" cy="65" r="42" stroke-dasharray="6 3" stroke="#68707d" />
                   <circle cx="95" cy="65" r="12" fill="#121418" />
@@ -1104,101 +937,64 @@
                   <circle cx="305" cy="205" r="12" fill="#121418" />
                 </g>
 
-                <!-- Central Avionics & Compute Fuselage -->
                 <polygon points="170,85 230,85 242,135 230,185 170,185 158,135" fill="#121418" stroke="#f2f4f7" stroke-width="1.5" />
                 <rect x="178" y="102" width="44" height="66" fill="#090a0c" stroke="#ff6b00" stroke-width="1.2" />
-                <!-- CG Marker -->
                 <circle cx="200" cy="135" r="6" stroke="#ff6b00" stroke-width="1.2" />
                 <line x1="192" y1="135" x2="208" y2="135" stroke="#ff6b00" stroke-width="1.2" />
                 <line x1="200" y1="127" x2="200" y2="143" stroke="#ff6b00" stroke-width="1.2" />
 
-                <!-- Callout Labels -->
-                <polyline points="222,115 265,95 335,95" stroke="#ff6b00" stroke-width="1" />
-                <text x="267" y="90" fill="#ff6b00" font-family="JetBrains Mono, monospace" font-size="7.5">CM4 + NPU BAY</text>
+                <polyline points="222,115 265,95 340,95" stroke="#ff6b00" stroke-width="1" />
+                <text x="267" y="90" fill="#ff6b00" font-family="JetBrains Mono, monospace" font-size="7.5">RPi SBC BAY</text>
 
                 <polyline points="170,175 135,225 65,225" stroke="#a0a8b4" stroke-width="1" />
-                <text x="65" y="220" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="7.5">VIO STEREO CAM</text>
+                <text x="65" y="220" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="7.5">SENSOR MOUNT</text>
               </svg>
 
-              <!-- View 2: CM4 Carrier PCB Schematic SVG (Hidden by default) -->
+              <!-- View 2: SBC Integration Schematic SVG -->
               <svg id="view-pcb" class="schematic-svg" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                <!-- PCB Board Outline -->
                 <rect x="45" y="25" width="310" height="210" fill="#0d1117" stroke="#f2f4f7" stroke-width="1.5" />
-                <!-- Mounting Holes -->
                 <circle cx="60" cy="40" r="6" stroke="#ff6b00" stroke-width="1.2" />
                 <circle cx="340" cy="40" r="6" stroke="#ff6b00" stroke-width="1.2" />
                 <circle cx="60" cy="220" r="6" stroke="#ff6b00" stroke-width="1.2" />
                 <circle cx="340" cy="220" r="6" stroke="#ff6b00" stroke-width="1.2" />
 
-                <!-- CM4 Module Footprint -->
                 <rect x="85" y="55" width="130" height="95" fill="#121418" stroke="#ff6b00" stroke-width="1.4" />
                 <rect x="98" y="65" width="90" height="10" stroke="#68707d" stroke-width="1" />
                 <rect x="98" y="130" width="90" height="10" stroke="#68707d" stroke-width="1" />
-                <text x="150" y="102" fill="#f2f4f7" font-family="JetBrains Mono, monospace" font-size="8.5" text-anchor="middle">RPi CM4 / SOM</text>
-                <text x="150" y="114" fill="#ff6b00" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">100-PIN HIROSE B2B</text>
+                <text x="150" y="102" fill="#f2f4f7" font-family="JetBrains Mono, monospace" font-size="8.5" text-anchor="middle">RASPBERRY Pi SBC</text>
+                <text x="150" y="114" fill="#ff6b00" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">ON-BOARD COMPUTE</text>
 
-                <!-- M.2 Edge AI TPU Slot -->
                 <rect x="240" y="55" width="85" height="95" fill="#121418" stroke="#a0a8b4" stroke-width="1.2" />
-                <text x="282" y="100" fill="#f2f4f7" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">PCIe NPU</text>
-                <text x="282" y="112" fill="#68707d" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">AI ACCELERATOR</text>
+                <text x="282" y="100" fill="#f2f4f7" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">EDGE AI MODULE</text>
+                <text x="282" y="112" fill="#68707d" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">PROTOTYPE BUS</text>
 
-                <!-- Differential Pair Traces -->
                 <polyline points="215,90 240,90" stroke="#ff6b00" stroke-width="1.2" />
                 <polyline points="215,96 240,96" stroke="#ff6b00" stroke-width="1.2" />
                 <polyline points="215,108 240,108" stroke="#ff6b00" stroke-width="1.2" />
                 <polyline points="140,150 140,185 200,185" stroke="#68707d" stroke-width="1.2" />
-                <polyline points="150,150 150,195 200,195" stroke="#68707d" stroke-width="1.2" />
 
-                <!-- Redundant IMU + Dual BEC -->
                 <rect x="85" y="172" width="42" height="36" fill="#121418" stroke="#f2f4f7" stroke-width="1" />
-                <text x="106" y="193" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="6.5" text-anchor="middle">DUAL IMU</text>
+                <text x="106" y="193" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="6.5" text-anchor="middle">IMU / NAV</text>
 
                 <rect x="200" y="172" width="125" height="36" fill="#121418" stroke="#f2f4f7" stroke-width="1" />
-                <text x="262" y="193" fill="#f2f4f7" font-family="JetBrains Mono, monospace" font-size="7.5" text-anchor="middle">CAN-FD / MAVLINK BUS</text>
+                <text x="262" y="193" fill="#f2f4f7" font-family="JetBrains Mono, monospace" font-size="7.5" text-anchor="middle">FLIGHT CONTROLLER</text>
               </svg>
 
               <div class="viewport-overlay-coords">
-                <span>SCALE: 1:5 // UNIT: MM</span>
-                <span id="imu-readout">PITCH: +0.4° // ROLL: -0.1° // YAW: 284.2°</span>
+                <span>SCHEMATIC // CONCEPT VIEW</span>
+                <span>REV: PROTOTYPE_01</span>
               </div>
             </div>
 
-            <!-- Mock Telemetry / System Status Module -->
-            <div class="system-status-console">
-              <div class="console-title">
-                <span>TELEMETRY / SYSTEM STATUS MONITOR</span>
-                <span>CH_01 // LOCAL LOOPBACK</span>
+            <!-- Simple Project Status Box -->
+            <div class="project-status-box">
+              <div class="project-status-badge">
+                <span class="indicator-square"></span>
+                <span>PROJECT STATUS: EARLY PROTOTYPING &amp; R&amp;D</span>
               </div>
-              <div class="status-matrix">
-                <div class="status-cell">
-                  <span class="label">NAVIGATION SATELLITE</span>
-                  <span class="value amber">
-                    <span>GPS STATUS: OFFLINE</span>
-                    <span>[DENIED]</span>
-                  </span>
-                </div>
-                <div class="status-cell">
-                  <span class="label">FLIGHT CONTROL STACK</span>
-                  <span class="value">
-                    <span>AUTONOMY: ACTIVE</span>
-                    <span class="indicator-square"></span>
-                  </span>
-                </div>
-                <div class="status-cell">
-                  <span class="label">BVLOS COMMS LINK</span>
-                  <span class="value amber">
-                    <span>TELEMETRY: LOST</span>
-                    <span>[SILENT]</span>
-                  </span>
-                </div>
-                <div class="status-cell">
-                  <span class="label">MISSION EXECUTION</span>
-                  <span class="value">
-                    <span>ON-BOARD AI: LOCKED</span>
-                    <span>99.4%</span>
-                  </span>
-                </div>
-              </div>
+              <p class="project-status-desc">
+                Currently building and testing hardware bench prototypes, evaluating edge inference models on Raspberry Pi-class SBCs, and iterating 3D-printed composite airframe structures.
+              </p>
             </div>
           </div>
         </div>
@@ -1206,27 +1002,27 @@
     </section>
 
     <!-- 2. Key Focus Areas Section -->
-    <section class="section-block" id="hardware-focus">
+    <section class="section-block" id="focus-areas">
       <div class="container">
         <div class="section-bar">
           <div>
-            <span class="section-eyebrow">// ENGINEERING DISCIPLINES</span>
-            <h2 class="section-heading">KEY HARDWARE &amp; AUTONOMY FOCUS AREAS</h2>
+            <span class="section-eyebrow">// CORE RESEARCH &amp; DEVELOPMENT PILLARS</span>
+            <h2 class="section-heading">KEY FOCUS AREAS</h2>
           </div>
-          <div class="section-code">SPEC_SHEET // 01 — 03</div>
+          <div class="section-code">R&amp;D_TRACKS // 01 — 03</div>
         </div>
 
         <div class="focus-grid">
-          <!-- Key Focus 01 -->
+          <!-- Column 1 -->
           <article class="focus-card">
             <div class="focus-card-top">
               <div class="focus-card-header">
-                <span class="focus-index">KEY FOCUS // 01</span>
-                <span class="focus-class">SBC + NPU COMPUTE</span>
+                <span class="focus-index">FOCUS AREA // 01</span>
+                <span class="focus-class">HARDWARE TESTBED</span>
               </div>
 
               <div class="focus-schematic-box" aria-hidden="true">
-                <span class="cad-ref">DWG_01 // CM4-EDGE</span>
+                <span class="cad-ref">FIG_01 // SBC-EDGE</span>
                 <svg width="180" height="76" viewBox="0 0 180 76" fill="none" stroke="#f2f4f7" stroke-width="1.2">
                   <rect x="10" y="10" width="68" height="56" stroke="#ff6b00" />
                   <rect x="20" y="20" width="24" height="24" />
@@ -1236,84 +1032,84 @@
                   <line x1="78" y1="28" x2="104" y2="28" stroke="#ff6b00" />
                   <line x1="78" y1="48" x2="104" y2="48" stroke="#ff6b00" />
                   <rect x="104" y="14" width="64" height="48" />
-                  <text x="136" y="41" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" stroke="none">EDGE AI NPU</text>
+                  <text x="136" y="41" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle" stroke="none">RPi + EDGE AI</text>
                 </svg>
               </div>
 
-              <h3>EDGE COMPUTE &amp; HARDWARE AUTONOMY</h3>
+              <h3>EDGE COMPUTE INTEGRATION</h3>
               <p>
-                Custom on-board single-board computers (Raspberry Pi/CM4 class) and edge AI accelerators driving offline mission control, sensor fusion, and situational awareness.
+                Prototyping with Raspberry Pi and specialized single-board computers to move AI processing directly to the edge, reducing cloud dependency during flights.
               </p>
             </div>
 
             <div class="focus-card-specs">
               <div class="spec-row">
-                <span class="k">COMPUTE NODE</span>
-                <span class="v">RPi CM4 / ARM Cortex-A72</span>
+                <span class="k">PLATFORM</span>
+                <span class="v">Raspberry Pi &amp; Modular SBCs</span>
               </div>
               <div class="spec-row">
-                <span class="k">ACCELERATOR</span>
-                <span class="v">PCIe Gen2 Edge NPU / TPU</span>
+                <span class="k">OBJECTIVE</span>
+                <span class="v">On-Board AI Inference</span>
               </div>
               <div class="spec-row">
-                <span class="k">CLOUD DEPENDENCY</span>
-                <span class="v">0% (100% ON-BOARD)</span>
+                <span class="k">STAGE</span>
+                <span class="v">Bench Prototyping</span>
               </div>
             </div>
           </article>
 
-          <!-- Key Focus 02 -->
+          <!-- Column 2 -->
           <article class="focus-card">
             <div class="focus-card-top">
               <div class="focus-card-header">
-                <span class="focus-index">KEY FOCUS // 02</span>
-                <span class="focus-class">DENIED-ENV NAV</span>
+                <span class="focus-index">FOCUS AREA // 02</span>
+                <span class="focus-class">NAVIGATION R&amp;D</span>
               </div>
 
               <div class="focus-schematic-box" aria-hidden="true">
-                <span class="cad-ref">DWG_02 // BVLOS-PATH</span>
+                <span class="cad-ref">FIG_02 // BVLOS-NAV</span>
                 <svg width="180" height="76" viewBox="0 0 180 76" fill="none" stroke="#f2f4f7" stroke-width="1.2">
                   <circle cx="24" cy="54" r="5" fill="#ff6b00" stroke="none" />
                   <path d="M24 54 L68 22 L118 46 L158 18" stroke="#ff6b00" stroke-dasharray="4 3" />
                   <rect x="58" y="34" width="22" height="22" stroke="#68707d" />
                   <line x1="58" y1="34" x2="80" y2="56" stroke="#68707d" />
                   <rect x="146" y="10" width="18" height="16" stroke="#f2f4f7" />
-                  <text x="115" y="66" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="7.5" stroke="none">AUTO-DOCK / VIO</text>
+                  <text x="115" y="66" fill="#a0a8b4" font-family="JetBrains Mono, monospace" font-size="7.5" stroke="none">OFFLINE ROUTE R&amp;D</text>
                 </svg>
               </div>
 
-              <h3>BVLOS &amp; OFFLINE RESILIENCY</h3>
+              <h3>BVLOS &amp; AUTONOMY RESEARCH</h3>
               <p>
-                Autonomous GPS-denied route-planning and self-charging capabilities for long-range beyond-visual-line-of-sight (BVLOS) scenarios when communication and telemetry are completely lost.
+                Researching algorithmic solutions for GPS-denied navigation and autonomous self-charging systems for scenarios where communication links are lost.
               </p>
             </div>
 
             <div class="focus-card-specs">
               <div class="spec-row">
-                <span class="k">LOCALIZATION</span>
-                <span class="v">VIO + Optical Flow + SLAM</span>
+                <span class="k">RESEARCH FOCUS</span>
+                <span class="v">GPS-Denied Navigation</span>
               </div>
               <div class="spec-row">
-                <span class="k">COMMS BLACKOUT</span>
-                <span class="v">Autonomous Mission Continuation</span>
+                <span class="k">RESILIENCY</span>
+                <span class="v">Lost-Link &amp; Self-Charging</span>
               </div>
               <div class="spec-row">
-                <span class="k">ENDURANCE</span>
-                <span class="v">Precision Auto-Dock &amp; Charge</span>
+                <span class="k">STAGE</span>
+                <span class="v">Algorithmic Modeling</span>
               </div>
             </div>
           </article>
 
-          <!-- Key Focus 03 -->
+          <!-- Column 3 -->
           <article class="focus-card">
             <div class="focus-card-top">
               <div class="focus-card-header">
-                <span class="focus-index">KEY FOCUS // 03</span>
-                <span class="focus-class">STRUCTURAL FAB</span>
+                <span class="focus-index">FOCUS AREA // 03</span>
+                <span class="focus-class">AIRFRAME FAB</span>
               </div>
 
               <div class="focus-schematic-box" aria-hidden="true">
-                <span class="cad-ref">DWG_03 // PA12-CF</span>
+                <span class="cad-ref">FIG_03 // CAD-PRINT</span>
                 <svg width="180" height="76" viewBox="0 0 180 76" fill="none" stroke="#f2f4f7" stroke-width="1.2">
                   <polygon points="20,58 55,18 125,18 160,58" stroke="#f2f4f7" />
                   <line x1="55" y1="18" x2="90" y2="58" stroke="#ff6b00" />
@@ -1323,89 +1119,33 @@
                 </svg>
               </div>
 
-              <h3>CAD &amp; ADDITIVE PRODUCTION</h3>
+              <h3>ADDITIVE MANUFACTURING</h3>
               <p>
-                Integrating AI in structural drawing, computational CAD design, and high-quality 3D printing utilizing engineering-grade filaments (like Carbon Fiber and Nylon) to withstand harsh environments.
+                Utilizing advanced engineering filaments (like Carbon Fiber and Nylon) and high-quality 3D printing to rapidly iterate and produce durable, custom UAV airframes.
               </p>
             </div>
 
             <div class="focus-card-specs">
               <div class="spec-row">
-                <span class="k">COMPOSITES</span>
-                <span class="v">PA12-CF / Nylon / PC-ABS</span>
+                <span class="k">MATERIALS</span>
+                <span class="v">Carbon Fiber &amp; Nylon</span>
               </div>
               <div class="spec-row">
-                <span class="k">CAD TOPOLOGY</span>
-                <span class="v">AI Generative Truss Lattice</span>
+                <span class="k">METHODOLOGY</span>
+                <span class="v">Rapid 3D-Printed Iteration</span>
               </div>
               <div class="spec-row">
-                <span class="k">FIELD REPAIR</span>
-                <span class="v">Modular Rapid-Print Airframes</span>
+                <span class="k">STAGE</span>
+                <span class="v">Structural Prototyping</span>
               </div>
             </div>
           </article>
-        </div>
-
-        <!-- Hardware & Field Terminal Verification Panel -->
-        <div class="architecture-panel" id="system-specs">
-          <div class="arch-col">
-            <div class="arch-title">
-              <span class="indicator-square"></span>
-              <span>ON-BOARD AUTONOMY STACK // FAILSAFE LOG</span>
-            </div>
-            <pre class="terminal-code"><code><span class="comment"># CKD-FLIGHT-CORE v4.2 // BVLOS MISSION EXECUTION LOG</span>
-<span class="cmd">[00:04:12.08]</span> IMU_KALMAN_INIT       :: DUAL_ICM42688 LOCKED (1000Hz)
-<span class="cmd">[00:04:12.40]</span> COMPUTE_BUS_CHECK     :: CM4_PCIe -> EDGE_NPU ONLINE
-<span class="warn">[00:18:45.11] WARN: GNSS_SIGNAL_LOST :: GPS STATUS: OFFLINE</span>
-<span class="warn">[00:18:45.14] WARN: RF_LINK_DROPPED  :: TELEMETRY STREAM TERMINATED</span>
-<span class="cmd">[00:18:45.15]</span> FAILSAFE_OVERRIDE     :: <span class="warn">AUTONOMY: ACTIVE [ZERO-OPERATOR MODE]</span>
-<span class="cmd">[00:18:45.19]</span> VIO_ODOMETRY_ENGAGED  :: STEREO_DEPTH + OPTICAL_FLOW LOCK
-<span class="cmd">[00:42:10.02]</span> TARGET_WAYPOINT_09    :: REACHED // PAD_DOCK_SEQUENCE_INIT</code></pre>
-          </div>
-
-          <div class="arch-col">
-            <div class="arch-title">
-              <span class="indicator-square"></span>
-              <span>HARDWARE BILL OF MATERIALS &amp; ENVELOPE</span>
-            </div>
-            <table class="bom-table">
-              <thead>
-                <tr>
-                  <th>SUBSYSTEM</th>
-                  <th>ENGINEERING SPECIFICATION</th>
-                  <th>STATUS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="highlight">FLIGHT COMPUTE</td>
-                  <td>Raspberry Pi CM4 + Custom Carrier PCB + Edge NPU</td>
-                  <td>PRODUCTION</td>
-                </tr>
-                <tr>
-                  <td class="highlight">NAVIGATION</td>
-                  <td>GPS-Denied VIO, Dead-Reckoning &amp; Obstacle Avoidance</td>
-                  <td>FIELD-TESTED</td>
-                </tr>
-                <tr>
-                  <td class="highlight">CHASSIS / FRAME</td>
-                  <td>Additive Carbon-Fiber Reinforced Nylon (PA12-CF)</td>
-                  <td>PRODUCTION</td>
-                </tr>
-                <tr>
-                  <td class="highlight">POWER &amp; DOCKING</td>
-                  <td>Autonomous Contact Pad Charging for BVLOS Sorties</td>
-                  <td>ACTIVE R&amp;D</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </section>
 
     <!-- 3. Call to Action Section -->
-    <section class="cta-section">
+    <section class="cta-section" id="supporting-rd">
       <div class="container">
         <div class="cta-box">
           <span class="corner-mark corner-tl"></span>
@@ -1414,15 +1154,15 @@
           <span class="corner-mark corner-br"></span>
 
           <div>
-            <span class="section-eyebrow">// DIRECT ENGINEERING &amp; PARTNERSHIP INQUIRIES</span>
-            <h2>DEPLOY OR EVALUATE CK DYNAMICS HARDWARE</h2>
+            <span class="section-eyebrow">// INCUBATOR &amp; STARTUP GRANT APPLICATIONS</span>
+            <h2>SUPPORTING OUR R&amp;D</h2>
             <p>
-              Available for technical evaluations, hardware demonstrations, defense &amp; industrial R&amp;D partnerships, and incubator/grant engineering reviews.
+              We are currently applying for AI startup programs and grants (like Anthropic and Microsoft Founders Hub) to accelerate our software development and autonomous system modeling.
             </p>
           </div>
 
           <div class="cta-contact-module">
-            <span class="contact-label">PRIMARY ENGINEERING CONTACT</span>
+            <span class="contact-label">PROJECT LEAD &amp; R&amp;D CONTACT</span>
             <div class="email-display-row">
               <a href="mailto:can@ckdynamics.space" class="email-address">can@ckdynamics.space</a>
               <button type="button" class="copy-btn" id="copy-email-btn" data-email="can@ckdynamics.space">
@@ -1430,7 +1170,7 @@
               </button>
             </div>
             <a href="mailto:can@ckdynamics.space" class="btn btn-amber" style="width: 100%;">
-              <span>TRANSMIT INQUIRY // GET IN TOUCH</span>
+              <span>CONTACT FOR INCUBATOR &amp; GRANT DETAILS</span>
             </a>
           </div>
         </div>
@@ -1441,39 +1181,17 @@
   <!-- Footer -->
   <footer>
     <div class="container footer-inner">
-      <div>&copy; 2026 CK DYNAMICS. ALL RIGHTS RESERVED. // AUTONOMOUS FLIGHT HARDWARE</div>
+      <div>&copy; 2026 CK DYNAMICS. ALL RIGHTS RESERVED. // AUTONOMOUS UAV R&amp;D PROJECT</div>
       <div>
-        DIRECT COMMS: <a href="mailto:can@ckdynamics.space">can@ckdynamics.space</a>
+        CONTACT: <a href="mailto:can@ckdynamics.space">can@ckdynamics.space</a>
       </div>
     </div>
   </footer>
 
-  <!-- Minimal Utility Script: Schematic Switcher, UTC Clock, Telemetry Jitter & Email Copy -->
+  <!-- Utility Script: CAD View Switcher & Email Copy -->
   <script>
     (function () {
-      // 1. Live UTC Clock
-      const clockEl = document.getElementById('utc-clock');
-      function updateClock() {
-        if (!clockEl) return;
-        const now = new Date();
-        clockEl.textContent = now.toISOString().slice(11, 19) + 'Z';
-      }
-      updateClock();
-      setInterval(updateClock, 1000);
-
-      // 2. Subtle Live IMU Readout Update
-      const imuEl = document.getElementById('imu-readout');
-      setInterval(() => {
-        if (!imuEl) return;
-        const pitch = (Math.random() * 0.6 - 0.1).toFixed(1);
-        const roll = (Math.random() * 0.4 - 0.2).toFixed(1);
-        const yaw = (284.0 + Math.random() * 0.5).toFixed(1);
-        const pSign = pitch >= 0 ? '+' : '';
-        const rSign = roll >= 0 ? '+' : '';
-        imuEl.textContent = `PITCH: ${pSign}${pitch}° // ROLL: ${rSign}${roll}° // YAW: ${yaw}°`;
-      }, 1800);
-
-      // 3. CAD Airframe vs. PCB Schematic Toggle
+      // 1. CAD Airframe vs. SBC Layout Toggle
       const tabs = document.querySelectorAll('.schematic-tab');
       const viewAirframe = document.getElementById('view-airframe');
       const viewPcb = document.getElementById('view-pcb');
@@ -1487,16 +1205,16 @@
           if (target === 'pcb') {
             viewAirframe.style.display = 'none';
             viewPcb.style.display = 'block';
-            schematicTitle.textContent = 'FIG 1.2 // CM4 + EDGE NPU CARRIER PCB LAYOUT';
+            schematicTitle.textContent = 'CONCEPT_CAD // RPi SBC & EDGE AI INTEGRATION';
           } else {
             viewAirframe.style.display = 'block';
             viewPcb.style.display = 'none';
-            schematicTitle.textContent = 'FIG 1.1 // UAV AIRFRAME ORTHOGRAPHIC CAD';
+            schematicTitle.textContent = 'CONCEPT_CAD // PROTOTYPE AIRFRAME GEOMETRY';
           }
         });
       });
 
-      // 4. Copy Email Utility
+      // 2. Copy Email Utility
       const copyBtn = document.getElementById('copy-email-btn');
       if (copyBtn) {
         copyBtn.addEventListener('click', () => {
@@ -1516,3 +1234,4 @@
   </script>
 </body>
 </html>
+```
